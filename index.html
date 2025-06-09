@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BumiLog Article</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      /* Light theme colors */
+      --color-bg: #ffffff;
+      --color-text: #374151;
+      --color-text-muted: #6b7280;
+      --color-primary: #111827;
+      --color-primary-light: #374151;
+      --color-card-bg: #f9fafb;
+      --color-button-bg: #111827;
+      --color-button-text: #ffffff;
+      --color-button-hover-bg: #374151;
+      --color-shadow: rgba(0, 0, 0, 0.05);
+      --border-radius: 0.75rem;
+      --transition-duration: 0.3s;
+      --max-content-width: 1200px;
+      --header-height: 64px;
+    }
+    [data-theme="dark"] {
+      --color-bg: #1e293b;
+      --color-text: #f3f4f6;
+      --color-text-muted: #9ca3af;
+      --color-primary: #d1d5db;
+      --color-primary-light: #e5e7eb;
+      --color-card-bg: #334155;
+      --color-button-bg: #f3f4f6;
+      --color-button-text: #1e293b;
+      --color-button-hover-bg: #e0e7ff;
+      --color-shadow: rgba(0, 0, 0, 0.7);
+    }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.6;
+      font-size: 18px;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    a {
+      color: var(--color-primary);
+      text-decoration: none;
+      transition: color var(--transition-duration) ease;
+    }
+    a:hover, a:focus {
+      color: var(--color-button-bg);
+      outline: none;
+    }
+    header {
+      position: sticky;
+      top: 0;
+      background-color: var(--color-bg);
+      box-shadow: 0 2px 10px var(--color-shadow);
+      height: var(--header-height);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      backdrop-filter: saturate(180%) blur(10px);
+    }
+    .logo {
+      font-weight: 800;
+      font-size: 0.8rem;
+      color: var(--color-primary);
+      letter-spacing: 0.05em;
+      user-select: none;
+    }
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+    nav a {
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 0.5rem 0;
+      position: relative;
+    }
+    nav a::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0%;
+      height: 2px;
+      background: var(--color-primary);
+      transition: width var(--transition-duration) ease;
+      border-radius: 2px;
+    }
+    nav a:hover::after, nav a:focus::after {
+      width: 100%;
+    }
+    .theme-toggle {
+      background: none;
+      border: 2px solid var(--color-primary);
+      border-radius: var(--border-radius);
+      padding: 0.3rem 0.8rem;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--color-primary);
+      transition: background-color var(--transition-duration), color var(--transition-duration);
+      user-select: none;
+    }
+    .theme-toggle:hover, .theme-toggle:focus {
+      background-color: var(--color-primary);
+      color: var(--color-button-text);
+      outline: none;
+    }
+
+    main {
+      max-width: var(--max-content-width);
+      margin: 3rem auto;
+      padding: 0 1.5rem;
+    }
+    .hero {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+    .hero h1 {
+      font-weight: 800;
+      font-size: 3.5rem;
+      margin: 0 0 1rem 0;
+      color: var(--color-primary);
+    }
+    .hero p {
+      font-size: 1.25rem;
+      color: var(--color-text-muted);
+      margin-bottom: 1.5rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hero .btn-primary {
+      font-weight: 700;
+      font-size: 1.125rem;
+      background-color: var(--color-button-bg);
+      color: var(--color-button-text);
+      padding: 0.75rem 2rem;
+      border: none;
+      border-radius: var(--border-radius);
+      cursor: pointer;
+      box-shadow: 0 8px 15px rgba(17,24,39, 0.3);
+      transition: background-color var(--transition-duration), transform var(--transition-duration);
+      user-select: none;
+    }
+    .hero .btn-primary:hover, .hero .btn-primary:focus {
+      background-color: var(--color-button-hover-bg);
+      transform: scale(1.05);
+      outline: none;
+    }
+
+    .articles {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+    article.card {
+      background-color: var(--color-card-bg);
+      border-radius: var(--border-radius);
+      box-shadow: 0 4px 10px var(--color-shadow);
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      transition: box-shadow var(--transition-duration), transform var(--transition-duration);
+      cursor: pointer;
+      user-select: none;
+    }
+    article.card:hover, article.card:focus-within {
+      box-shadow: 0 10px 20px var(--color-shadow);
+      transform: translateY(-5px);
+      outline: none;
+    }
+    article .title {
+      font-weight: 700;
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+      color: var(--color-primary);
+      line-height: 1.3;
+    }
+    article .summary {
+      flex-grow: 1;
+      font-size: 1rem;
+      color: var(--color-text-muted);
+      margin-bottom: 1.25rem;
+      line-height: 1.5;
+    }
+    article .meta {
+      font-size: 0.875rem;
+      color: var(--color-text-muted);
+      font-weight: 600;
+      user-select: text;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      color: var(--color-text-muted);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 480px) {
+      header {
+        padding: 0 1rem;
+      }
+      main {
+        margin: 2rem auto;
+        padding: 0 1rem;
+      }
+      .hero h1 {
+        font-size: 2.25rem;
+      }
+      .hero p {
+        font-size: 1rem;
+      }
+      nav {
+        gap: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo" tabindex="0" aria-label="Website Logo">🌍BumiLog</div>
+    <nav role="navigation" aria-label="Main navigation">
+      <a href="#articles" tabindex="0">Articles</a>
+      <a href="#about" tabindex="0">About</a>
+      <button class="theme-toggle" id="theme-toggle" aria-pressed="false" aria-label="Toggle dark mode">Dark Mode</button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" role="banner" aria-label="Hero section">
+      <h1>Jelajahi Artikel yang Bermakna</h1>
+      <p>Menyajikan artikel populer, ilmiah, dan keseharian yang dikemas ringan, mudah dipahami, dan relevan.</p>
+     <a href="comingsoon.html" class="btn-primary" aria-label="Browse articles">Browse Articles</button>
+     </a>
+    </section>
+
+    <section id="articles" class="articles" aria-label="Articles section">
+  <article class="card" tabindex="0" role="article" aria-labelledby="title1" aria-describedby="summary1">
+    <h2 class="title" id="title1">
+      <a href="artikel1.html" style="color:inherit; text-decoration:none;" aria-label="Read more about Teknologi vs Manusia | Apakah AI Akan Menggantikan Kita?">
+      Teknologi vs Manusia | Apakah AI Akan Menggantikan Kita?
+      </a>
+    </h2>
+    <p class="summary" id="summary1">seiring meningkatnya kecanggihan AI, muncul pertanyaan yang semakin sering dilontarkan: Apakah AI akan menggantikan manusia?</p>
+    <div class="meta">9 Juni 2025 — by Ardha F</div>
+    <a href="artikel1.html" class="read-more" aria-label="Read more about Unlocking the Power of CSS Grid">Read More</a>
+  </article>
+
+  <article class="card" tabindex="0" role="article" aria-labelledby="title2" aria-describedby="summary2">
+    <h2 class="title" id="title2">
+      <a href="artikel2.html" style="color:inherit; text-decoration:none;" aria-label="Read more about Gizi dan Otak | Bagaimana Makanan Membentuk Kecerdasan?">
+      Gizi dan Otak | Bagaimana Makanan Membentuk Kecerdasan?
+      </a>
+    </h2>
+    <p class="summary" id="summary2">tahukah kamu bahwa performa otakmu bukan hanya ditentukan oleh kebiasaan belajar atau screen time, melainkan juga oleh apa yang kamu makan setiap hari?</p>
+    <div class="meta">9 Juni 2025 — by Ardha F</div>
+    <a href="artikel2.html" class="read-more" aria-label="Read more about The Rise of Dark Mode Design">Read More</a>
+  </article>
+
+  
+
+ 
+</section>
+
+
+    <section id="about" style="margin-top:4rem; text-align:center;">
+      <h2>About 🌍BumiLog</h2>
+      <p style="max-width: 600px; margin:auto; color: var(--color-text-muted); font-size: 1rem;">
+<p style="max-width: 600px; margin:auto; color: var(--color-text-muted); font-size: 1rem; text-align:justify;">
+Artikel ringan penuh inspirasi yang menyajikan Informasi secara sederhana dan relevan, untuk membangkitkan rasa ingin tahu, mendorong inovasi, dan memperluas cara pandang.
+</p>
+</section>
+</main>
+
+<footer>
+  &copy; 2025 🌍BumiLog | Created By Ardha.
+</footer>
+
+<script>
+  const themeToggleBtn = document.getElementById('theme-toggle');
+  const rootElement = document.documentElement;
+
+  function setTheme(theme) {
+    if (theme === 'dark') {
+      rootElement.setAttribute('data-theme', 'dark');
+      themeToggleBtn.textContent = 'Light Mode';
+      themeToggleBtn.setAttribute('aria-pressed', 'true');
+    } else {
+      rootElement.removeAttribute('data-theme');
+      themeToggleBtn.textContent = 'Dark Mode';
+      themeToggleBtn.setAttribute('aria-pressed', 'false');
+    }
+  }
+
+  // Initialize theme from saved preference or system
+  const savedTheme = localStorage.getItem('theme')
+    setTheme(savedTheme);
+
+    themeToggleBtn.addEventListener('click', () => {
+      const currentTheme = rootElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      setTheme(newTheme);
+      localStorage.setItem('theme', newTheme);
+    });
+  </script>
+</body>
+</html>
+

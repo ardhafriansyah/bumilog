@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>All Articles - ArticleHub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --color-bg: #ffffff;
+      --color-text: #374151;
+      --color-text-muted: #6b7280;
+      --color-primary: #111827;
+      --color-button-bg: #111827;
+      --color-button-text: #ffffff;
+      --color-button-hover-bg: #374151;
+      --color-shadow: rgba(0, 0, 0, 0.05);
+      --border-radius: 0.75rem;
+      --transition-duration: 0.3s;
+      --max-content-width: 1200px;
+      --header-height: 64px;
+    }
+    [data-theme="dark"] {
+      --color-bg: #1e293b;
+      --color-text: #f3f4f6;
+      --color-text-muted: #9ca3af;
+      --color-primary: #d1d5db;
+      --color-button-bg: #f3f4f6;
+      --color-button-text: #1e293b;
+      --color-button-hover-bg: #e0e7ff;
+      --color-shadow: rgba(0, 0, 0, 0.7);
+    }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.6;
+      font-size: 18px;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    a {
+      color: var(--color-primary);
+      text-decoration: none;
+      transition: color var(--transition-duration) ease;
+    }
+    a:hover, a:focus {
+      color: var(--color-button-bg);
+      outline: none;
+    }
+    header {
+      position: sticky;
+      top: 0;
+      background-color: var(--color-bg);
+      box-shadow: 0 2px 10px var(--color-shadow);
+      height: var(--header-height);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      backdrop-filter: saturate(180%) blur(10px);
+    }
+    .logo {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--color-primary);
+      letter-spacing: 0.05em;
+      user-select: none;
+    }
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+    nav a {
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 0.5rem 0;
+      position: relative;
+    }
+    nav a::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0%;
+      height: 2px;
+      background: var(--color-primary);
+      transition: width var(--transition-duration) ease;
+      border-radius: 2px;
+    }
+    nav a:hover::after, nav a:focus::after {
+      width: 100%;
+    }
+    .theme-toggle {
+      background: none;
+      border: 2px solid var(--color-primary);
+      border-radius: var(--border-radius);
+      padding: 0.3rem 0.8rem;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--color-primary);
+      transition: background-color var(--transition-duration), color var(--transition-duration);
+      user-select: none;
+    }
+    .theme-toggle:hover, .theme-toggle:focus {
+      background-color: var(--color-primary);
+      color: var(--color-button-text);
+      outline: none;
+    }
+    main {
+      max-width: var(--max-content-width);
+      margin: 4rem auto 5rem;
+      padding: 0 1.5rem;
+    }
+    h1.page-title {
+      font-size: 3rem;
+      font-weight: 800;
+      margin-bottom: 2.5rem;
+      color: var(--color-primary);
+      user-select: text;
+    }
+    .articles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+    }
+    article.card {
+      background-color: #f9fafb;
+      border-radius: var(--border-radius);
+      box-shadow: 0 4px 10px var(--color-shadow);
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      user-select: none;
+      transition: box-shadow var(--transition-duration), transform var(--transition-duration);
+    }
+    article.card:hover, article.card:focus-within {
+      box-shadow: 0 10px 20px var(--color-shadow);
+      transform: translateY(-5px);
+      outline: none;
+    }
+    article.card a {
+      all: unset;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      outline-offset: 3px;
+    }
+    article .title {
+      font-weight: bold;
+      font-size: 1.5rem;
+      margin-bottom: 0.75rem;
+      color: black;
+      line-height: 1.2;
+      user-select: text;
+    }
+    article .summary {
+      flex-grow: 1;
+      font-size: 1rem;
+      color: var(--color-text-muted);
+      margin-bottom: 1.5rem;
+      line-height: 1.4;
+      user-select: text;
+    }
+    article .meta {
+      font-size: 0.875rem;
+      color: var(--color-text-muted);
+      font-weight: 600;
+      user-select: text;
+    }
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      color: var(--color-text-muted);
+      font-size: 0.9rem;
+    }
+    @media (max-width: 480px) {
+      header {
+        padding: 0 1rem;
+      }
+      main {
+        margin: 2rem auto 3rem;
+        padding: 0 1rem;
+      }
+      h1.page-title {
+        font-size: 2.25rem;
+      }
+      nav {
+        gap: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo" tabindex="0" aria-label="Website Logo">🌍BumiLog</div>
+    <nav role="navigation" aria-label="Main navigation">
+      <a href="index.html" tabindex="0">Home</a>
+    </nav>
+    <button class="theme-toggle" id="theme-toggle" aria-pressed="false" aria-label="Toggle dark mode">Dark Mode</button>
+  </header>
+
+  <main>
+    <h1 class="page-title">All Articles</h1>
+    <section class="articles-grid" aria-label="List of articles">
+      <article class="card" tabindex="0" role="article" aria-labelledby="title1" aria-describedby="summary1">
+        <a href="article-1.html">
+          <h2 class="title" id="title1">Unlocking the Power of CSS Grid</h2>
+          <p class="summary" id="summary1">Discover the fundamentals and advanced techniques to build responsive layouts beautifully and efficiently.</p>
+          <div class="meta">April 26, 2024 — by Jane Doe</div>
+        </a>
+      </article>
+      <article class="card" tabindex="0" role="article" aria-labelledby="title2" aria-describedby="summary2">
+        <a href="#">
+          <h2 class="title" id="title2">The Rise of Dark Mode Design</h2>
+          <p class="summary" id="summary2">Explore the benefits and best practices of implementing dark mode for a more comfortable user experience.</p>
+          <div class="meta">March 20, 2024 — by John Smith</div>
+        </a>
+      </article>
+      <article class="card" tabindex="0" role="article" aria-labelledby="title3" aria-describedby="summary3">
+        <a href="#">
+          <h2 class="title" id="title3">JavaScript ES2024: What’s New?</h2>
+          <p class="summary" id="summary3">A roundup of the latest features and improvements coming in the ECMAScript 2024 specification.</p>
+          <div class="meta">February 10, 2024 — by Alex Lee</div>
+        </a>
+      </article>
+      <article class="card" tabindex="0" role="article" aria-labelledby="title4" aria-describedby="summary4">
+        <a href="#">
+          <h2 class="title" id="title4">Design Systems: Why They Matter</h2>
+          <p class="summary" id="summary4">Understand how design systems help teams maintain consistency and speed up development cycles.</p>
+          <div class="meta">January 15, 2024 — by Emma White</div>
+        </a>
+      </article>
+
+       <article class="card" tabindex="0" role="article" aria-labelledby="title5" aria-describedby="summary5">
+        <a href="#">
+          <h2 class="title" id="title5">Design Systems: Why They Matter</h2>
+          <p class="summary" id="summary5">Understand how design systems help teams maintain consistency and speed up development cycles.</p>
+          <div class="meta">January 15, 2024 — by Emma White</div>
+        </a>
+      </article>
+
+       <article class="card" tabindex="0" role="article" aria-labelledby="title6" aria-describedby="summary6">
+        <a href="#">
+          <h2 class="title" id="title6">Design Systems: Why They Matter</h2>
+          <p class="summary" id="summary6">Understand how design systems help teams maintain consistency and speed up development cycles.</p>
+          <div class="meta">January 15, 2024 — by Emma White</div>
+        </a>
+      </article>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2025 🌍BumiLog | Created By Ardha.
+  </footer>
+
+  <script>
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const rootElement = document.documentElement;
+
+    function setTheme(theme) {
+      if (theme === 'dark') {
+        rootElement.setAttribute('data-theme', 'dark');
+        themeToggleBtn.textContent = 'Light Mode';
+        themeToggleBtn.setAttribute('aria-pressed', 'true');
+      } else {
+        rootElement.removeAttribute('data-theme');
+        themeToggleBtn.textContent = 'Dark Mode';
+        themeToggleBtn.setAttribute('aria-pressed', 'false');
+      }
+    }
+
+    const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    setTheme(savedTheme);
+
+    themeToggleBtn.addEventListener('click', () => {
+      const currentTheme = rootElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      setTheme(newTheme);
+      localStorage.setItem('theme', newTheme);
+    });
+  </script>
+</body>
+</html>
+

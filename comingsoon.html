@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Coming Soon</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --color-bg-start: #ff5f6d;
+    --color-bg-end: #ffc371;
+    --color-text-primary: #111827;
+    --color-text-secondary: #f3f4f6;
+    --color-primary: #ffffff;
+    --color-primary-hover: #fcd7b1;
+    --spacing-xxl: 4rem;
+    --spacing-xl: 3rem;
+    --spacing-lg: 2rem;
+    --spacing-md: 1.5rem;
+    --spacing-sm: 1rem;
+    --border-radius: 0.75rem;
+    --shadow-light: rgba(0,0,0,0.1);
+    --shadow-medium: rgba(0,0,0,0.15);
+    --transition-speed: 0.3s;
+  }
+
+  @keyframes gradientShift {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+
+  /* Reset and base */
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(270deg, var(--color-bg-start), var(--color-bg-end), #8e2de2, #4a00e0);
+    background-size: 800% 800%;
+    animation: gradientShift 15s ease infinite;
+    color: var(--color-primary);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  main {
+    max-width: 48rem;
+    margin: auto;
+    padding: var(--spacing-xxl) var(--spacing-lg) var(--spacing-xxl);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    animation: fadeScaleIn 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    opacity: 0;
+    transform: scale(0.95);
+    backdrop-filter: saturate(180%) blur(10px);
+    background-color: rgba(255 255 255 / 0.15);
+    border-radius: var(--border-radius);
+    box-shadow: 0 8px 32px var(--shadow-medium);
+    user-select: none;
+  }
+
+  @keyframes fadeScaleIn {
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  h1 {
+    font-weight: 700;
+    font-size: 3.5rem;
+    margin: 0 0 var(--spacing-md);
+    line-height: 1.1;
+    color: var(--color-primary);
+    text-shadow: 0 2px 8px rgba(0 0 0 / 0.35);
+  }
+
+  p.subtitle {
+    font-weight: 600;
+    font-size: 1.125rem;
+    color: var(--color-primary);
+    margin: 0 0 var(--spacing-xl);
+    text-shadow: 0 1px 6px rgba(0 0 0 / 0.3);
+  }
+
+  button.cta {
+    background-color: var(--color-primary);
+    color: var(--color-bg-end);
+    font-size: 1.125rem;
+    font-weight: 700;
+    padding: var(--spacing-sm) var(--spacing-lg);
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+    transition: background-color var(--transition-speed), transform var(--transition-speed), box-shadow var(--transition-speed);
+    user-select: none;
+    filter: drop-shadow(0 2px 2px rgba(0 0 0 / 0.1));
+  }
+  button.cta:hover,
+  button.cta:focus {
+    background-color: #ffe5b4; /* lighter accent */
+    color: var(--color-bg-start);
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+    outline: none;
+  }
+  button.cta:focus-visible {
+    outline: 2px solid var(--color-bg-start);
+    outline-offset: 3px;
+  }
+
+  footer {
+    text-align: center;
+    color: var(--color-primary);
+    font-size: 0.875rem;
+    padding: 0 var(--spacing-lg) var(--spacing-xl);
+    user-select: none;
+    text-shadow: 0 1px 4px rgba(0 0 0 / 0.25);
+  }
+
+  @media (max-width: 600px) {
+    h1 {
+      font-size: 2.5rem;
+    }
+    main {
+      padding: var(--spacing-xl) var(--spacing-md) var(--spacing-xl);
+      max-width: 90vw;
+      background-color: rgba(255 255 255 / 0.2);
+    }
+    button.cta {
+      width: 100%;
+      padding: var(--spacing-md);
+    }
+  }
+  .cta {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #ffffff;
+  color: black;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+</style>
+</head>
+<body>
+  <main role="main" aria-labelledby="pageTitle">
+    <h1 id="pageTitle">Coming Soon</h1>
+    <p class="subtitle">Good things take time 🌿
+We’re crafting something just for you.</p>
+<a href="index.html" class="cta">Back Homepage</a>
+  </main>
+  <footer>
+ &copy; 2025 🌍BumiLog | Created By Ardha.
+  </footer>
+</body>
+</html>
+
