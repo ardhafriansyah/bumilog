@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Perjalanan Waktu: Antara Sihir Film dan Fakta Sains Einstein</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      /* Light theme colors */
+      --color-bg: #ffffff;
+      --color-text: #374151;
+      --color-text-muted: #6b7280;
+      --color-primary: #111827;
+      --color-primary-light: #374151;
+      --color-button-bg: #111827;
+      --color-button-text: #ffffff;
+      --color-button-hover-bg: #374151;
+      --color-shadow: rgba(0, 0, 0, 0.05);
+      --border-radius: 0.75rem;
+      --transition-duration: 0.3s;
+      --max-content-width: 760px;
+      --header-height: 64px;
+    }
+    [data-theme="dark"] {
+      --color-bg: #1e293b;
+      --color-text: #f3f4f6;
+      --color-text-muted: #9ca3af;
+      --color-primary: #d1d5db;
+      --color-primary-light: #e5e7eb;
+      --color-button-bg: #f3f4f6;
+      --color-button-text: #1e293b;
+      --color-button-hover-bg: #e0e7ff;
+      --color-shadow: rgba(0, 0, 0, 0.7);
+    }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.75;
+      font-size: 18px;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    a {
+      color: var(--color-primary);
+      text-decoration: none;
+      transition: color var(--transition-duration) ease;
+    }
+    a:hover, a:focus {
+      color: var(--color-button-bg);
+      outline: none;
+    }
+    header {
+      position: sticky;
+      top: 0;
+      background-color: var(--color-bg);
+      box-shadow: 0 2px 10px var(--color-shadow);
+      height: var(--header-height);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      backdrop-filter: saturate(180%) blur(10px);
+    }
+    .logo {
+      font-weight: 800;
+      font-size: 0.8rem;
+      color: var(--color-primary);
+      letter-spacing: 0.05em;
+      user-select: none;
+    }
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+    nav a {
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 0.5rem 0;
+      position: relative;
+    }
+    nav a::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0%;
+      height: 2px;
+      background: var(--color-primary);
+      transition: width var(--transition-duration) ease;
+      border-radius: 2px;
+    }
+    nav a:hover::after, nav a:focus::after {
+      width: 100%;
+    }
+    .theme-toggle {
+      background: none;
+      border: 2px solid var(--color-primary);
+      border-radius: var(--border-radius);
+      padding: 0.3rem 0.8rem;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--color-primary);
+      transition: background-color var(--transition-duration), color var(--transition-duration);
+      user-select: none;
+    }
+    .theme-toggle:hover, .theme-toggle:focus {
+      background-color: var(--color-primary);
+      color: var(--color-button-text);
+      outline: none;
+    }
+    main {
+      max-width: var(--max-content-width);
+      margin: 3rem auto 4rem;
+      padding: 0 1.5rem;
+    }
+    h1.article-title {
+      font-weight: 800;
+      font-size: 3rem;
+      margin-bottom: 0.25rem;
+      color: var(--color-primary);
+      line-height: 1.1;
+      user-select: text;
+    }
+    .article-meta {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--color-text-muted);
+      margin-bottom: 2rem;
+      user-select: text;
+    }
+    .article-image {
+      width: 100%;
+      border-radius: var(--border-radius);
+      box-shadow: 0 8px 20px var(--color-shadow);
+      margin-bottom: 2.5rem;
+      display: block;
+      object-fit: cover;
+      max-height: 350px;
+      user-select: none;
+    }
+    .article-content p {
+      font-size: 1.1rem;
+      margin-bottom: 1.25rem;
+      color: var(--color-text-muted);
+      user-select: text;
+    }
+    .article-content h2 {
+      font-weight: 700;
+      font-size: 2rem;
+      margin-top: 3rem;
+      margin-bottom: 1rem;
+      color: var(--color-primary);
+      user-select: text;
+    }
+    .article-content pre {
+      background-color: var(--color-card-bg);
+      padding: 1rem 1.25rem;
+      border-radius: var(--border-radius);
+      overflow-x: auto;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.95rem;
+      color: var(--color-primary-light);
+      user-select: text;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 10px var(--color-shadow);
+    }
+    .article-content code {
+      background-color: var(--color-card-bg);
+      border-radius: 0.3rem;
+      padding: 0.15rem 0.3rem;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.95rem;
+      color: var(--color-primary-light);
+      user-select: text;
+    }
+    .back-link {
+      display: inline-block;
+      margin-bottom: 2rem;
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--color-primary);
+      border: 2px solid var(--color-primary);
+      border-radius: var(--border-radius);
+      padding: 0.4rem 1rem;
+      transition: background-color var(--transition-duration), color var(--transition-duration);
+      cursor: pointer;
+      user-select: none;
+      text-decoration: none;
+    }
+    .back-link:hover, .back-link:focus {
+      background-color: var(--color-primary);
+      color: var(--color-button-text);
+      outline: none;
+    }
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      color: var(--color-text-muted);
+      font-size: 0.9rem;
+    }
+    @media (max-width: 480px) {
+      main {
+        margin: 2rem auto 3rem;
+        padding: 0 1rem;
+      }
+      h1.article-title {
+        font-size: 2.25rem;
+      }
+      .article-content h2 {
+        font-size: 1.5rem;
+      }
+      nav {
+        gap: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo" tabindex="0" aria-label="Website Logo">🌍BumiLog</div>
+    <nav role="navigation" aria-label="Main navigation">
+      <a href="index.html" tabindex="0">Home</a>
+      <a href="dashboard-artikel.html" tabindex="0">Article</a>
+      <button class="theme-toggle" id="theme-toggle" aria-pressed="false" aria-label="Toggle dark mode">Dark Mode</button>
+    </nav>
+  </header>
+
+  <main>
+    <a href="index.html" class="back-link" aria-label="Back to article list">← Back to Articles</a>
+    <article id="article" role="article" aria-labelledby="article-title" tabindex="0">
+      <h1 id="article-title" class="article-title">Perjalanan Waktu: Antara Sihir Film dan Fakta Sains Einstein</h1>
+      <div class="article-meta">01 Oktober 2025 — by Ardha F</div>
+      <img
+        src="https://images.unsplash.com/photo-1508962914676-134849a727f0?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        alt="Screenshot of a computer screen showing CSS grid layout code and design"
+        class="article-image"
+        loading="lazy"
+      />
+      <div class="article-content">
+    <p>
+        Siapa yang nggak kepincut sama ide perjalanan waktu? Dari mesin waktu <em>Back to the Future</em> sampai paradoks seru di <em>Avengers: Endgame</em>, film-film populer bikin kita bermimpi bisa lompat ke masa lalu atau masa depan. Tapi, apa sih kata sains soal perjalanan waktu? Yuk, kita bedah teori relativitas Einstein secara sederhana dan lihat seberapa “nyata” cerita film favoritmu!
+    </p>
+
+    <h2>Teori Relativitas Einstein: Waktu Bisa Melar!</h2>
+    <p>
+        Albert Einstein, si jenius berambut acak-acakan, punya ide gila di tahun 1905 yang dinamakan teori relativitas. Intinya? Waktu nggak selalu berjalan sama untuk semua orang. Bayangin waktu kayak karet: bisa melar atau menyusut tergantung kecepatan dan gravitasi.
+    </p>
+    <ul>
+        <li>
+            <strong>Kecepatan bikin waktu lambat:</strong> Kalau kamu jalan-jalan di luar angkasa dengan roket supercepat (mendekati kecepatan cahaya, 300 juta meter per detik), waktu buat kamu bakal berjalan lebih lambat dibandingkan orang di Bumi. Ini disebut <em>dilatasi waktu</em>.
+        </li>
+        <li>
+            <strong>Gravitasi juga ikut main:</strong> Di tempat dengan gravitasi kuat (misalnya, dekat lubang hitam), waktu jalan lebih lambat dibandingkan di tempat dengan gravitasi lemah.
+        </li>
+    </ul>
+    <p>
+        <em>Contoh gampang:</em> Kalau kamu punya jam super akurat di roket cepat, jam itu bakal berdetak lebih pelan dibandingkan jam di Bumi. Jadi, kamu bisa “lompat” ke masa depan karena waktu di Bumi udah berlalu lebih banyak!
+    </p>
+
+    <h2>Perjalanan Waktu di Film: Seberapa Akurat?</h2>
+    <p>
+        Film-film suka ngambil ide relativitas ini, tapi sering dilebih-lebihkan biar dramatis. Mari kita cek beberapa contoh populer:
+    </p>
+    <ol>
+        <li>
+            <strong>Interstellar (2014): Waktu Melar di Dekat Lubang Hitam</strong><br>
+            Di film <em>Interstellar</em>, Cooper dan timnya mendarat di planet dekat lubang hitam. Satu jam di sana sama dengan tujuh tahun di Bumi! Ini beneran berdasarkan teori relativitas Einstein. Gravitasi lubang hitam yang superkuat bikin waktu di planet itu melambat drastis.<br>
+            <em>Realitas sains:</em> Ini akurat banget! NASA bahkan bilang <em>Interstellar</em> salah satu film paling ilmiah soal relativitas. Kalau kamu dekat lubang hitam, waktu memang bisa “melar” karena gravitasi ekstrem. Tapi, sayangnya, bikin mesin buat ke sana dan balik lagi masih jauh dari kenyataan.
+        </li>
+        <li>
+            <strong>Back to the Future (1985): Mesin Waktu DeLorean</strong><br>
+            Marty McFly lompat ke masa lalu dan masa depan pake mobil DeLorean yang butuh 1,21 gigawatt (dan petir!). Seru banget, tapi sainsnya?<br>
+            <em>Realitas sains:</em> Sayangnya, nggak ada bukti kita bisa mundur ke masa lalu. Einstein bilang perjalanan ke masa depan mungkin (dengan kecepatan cahaya atau gravitasi kuat), tapi ke masa lalu? Banyak ilmuwan bilang itu mustahil karena paradoks, misalnya “paradoks kakek” (kalau kamu balik ke masa lalu dan ubah sesuatu, apa kamu masih ada?). Jadi, DeLorean cuma mimpi Hollywood.
+        </li>
+        <li>
+            <strong>Avengers: Endgame (2019): Quantum Realm dan Time Heist</strong><br>
+            Di <em>Endgame</em>, para Avengers pakai Quantum Realm buat lompat ke berbagai waktu dan kumpulin Infinity Stones. Mereka bilang waktu di sini nggak linear dan bisa dimanipulasi.<br>
+            <em>Realitas sains:</em> Quantum Realm di film ini cuma fiksi keren. Fisika kuantum memang aneh (partikel bisa ada di dua tempat sekaligus!), tapi nggak ada bukti kita bisa pakai ini buat perjalanan waktu. Plus, ide multiverse di film ini lebih ke spekulasi kosmologi ketimbang fakta. Tapi, film ini bikin relativitas jadi topik seru buat ngobrol!
+        </li>
+    </ol>
+
+    <h2>Bisakah Kita Beneran Jalan-Jalan Waktu?</h2>
+    <p>
+        Sains sekarang bilang perjalanan ke masa depan mungkin secara teori. Contohnya:
+    </p>
+    <ul>
+        <li>
+            <strong>Astronot di Stasiun Luar Angkasa (ISS)</strong> udah ngalamin dilatasi waktu kecil. Setelah setahun di orbit, mereka “lebih muda” beberapa milidetik dibandingkan orang di Bumi karena gerak cepat dan gravitasi rendah.
+        </li>
+        <li>
+            Kalau kita punya roket supercepat (yang belum ada), kamu bisa terbang selama setahun dan balik ke Bumi di mana semua orang udah tua banget.
+        </li>
+    </ul>
+    <p>
+        Tapi, ke masa lalu? Ini masih di luar jangkauan. Ada ide teoretis seperti “wormhole” (terowongan antarwaktu), tapi belum ada bukti nyata. Plus, bikin wormhole butuh energi sebesar matahari—bukan charger ponsel biasa!
+    </p>
+
+    <h2>Eksperimen Seru: Coba Pikirkan Waktu Sendiri</h2>
+    <p>
+        Mau main-main sama konsep waktu? Coba ini:
+    </p>
+    <ul>
+        <li>
+            <strong>Tonton film waktu:</strong> Pilih <em>Interstellar</em> atau <em>The Time Traveler’s Wife</em> dan catat kapan mereka pakai ide relativitas.
+        </li>
+        <li>
+            <strong>Bayangin paradoks:</strong> Kalau kamu bisa ke masa lalu, apa yang bakal kamu ubah? Lalu, apa akibatnya? Misalnya, kalau kamu cegah orang tua ketemu, kamu masih lahir nggak?
+        </li>
+        <li>
+            <strong>Cek jam astronot:</strong> Cari tahu berapa lama astronot tinggal di ISS dan hitung dilatasi waktunya (hint: Google “time dilation ISS experiment”).
+        </li>
+    </ul>
+
+    <h2>Waktu: Sihir yang Masih Misterius</h2>
+    <p></p>
+        Jadi, meski film-film bikin perjalanan waktu kelihatan gampang, sains bilang itu nggak sesederhana naik DeLorean. Teori relativitas Einstein kasih kita petunjuk keren bahwa waktu itu fleksibel, tapi kita masih jauh dari bikin mesin waktu. Untuk sekarang, nikmati aja petualangan waktu di layar lebar sambil ngemil popcorn!
+    </p>
+    <p>
+        Punya film perjalanan waktu favorit? Atau ide gila soal ke mana kamu mau lompat kalau punya mesin waktu?
+    </p>
+
+</div>
+    </article>
+  </main>
+
+  <footer>
+    &copy; 2025 🌍BumiLog
+  </footer>
+
+  <script>
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const rootElement = document.documentElement;
+
+    function setTheme(theme) {
+      if (theme === 'dark') {
+        rootElement.setAttribute('data-theme', 'dark');
+        themeToggleBtn.textContent = 'Light Mode';
+        themeToggleBtn.setAttribute('aria-pressed', 'true');
+      } else {
+        rootElement.removeAttribute('data-theme');
+        themeToggleBtn.textContent = 'Dark Mode';
+        themeToggleBtn.setAttribute('aria-pressed', 'false');
+      }
+    }
+
+    const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    setTheme(savedTheme);
+
+    themeToggleBtn.addEventListener('click', () => {
+      const currentTheme = rootElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      setTheme(newTheme);
+      localStorage.setItem('theme', newTheme);
+    });
+  </script>
+</body>
+</html>
+

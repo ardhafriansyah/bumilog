@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Teknologi vs Manusia | Apakah AI Akan Menggantikan Kita?</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      /* Light theme colors */
+      --color-bg: #ffffff;
+      --color-text: #374151;
+      --color-text-muted: #6b7280;
+      --color-primary: #111827;
+      --color-primary-light: #374151;
+      --color-button-bg: #111827;
+      --color-button-text: #ffffff;
+      --color-button-hover-bg: #374151;
+      --color-shadow: rgba(0, 0, 0, 0.05);
+      --border-radius: 0.75rem;
+      --transition-duration: 0.3s;
+      --max-content-width: 760px;
+      --header-height: 64px;
+    }
+    [data-theme="dark"] {
+      --color-bg: #1e293b;
+      --color-text: #f3f4f6;
+      --color-text-muted: #9ca3af;
+      --color-primary: #d1d5db;
+      --color-primary-light: #e5e7eb;
+      --color-button-bg: #f3f4f6;
+      --color-button-text: #1e293b;
+      --color-button-hover-bg: #e0e7ff;
+      --color-shadow: rgba(0, 0, 0, 0.7);
+    }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.75;
+      font-size: 18px;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    a {
+      color: var(--color-primary);
+      text-decoration: none;
+      transition: color var(--transition-duration) ease;
+    }
+    a:hover, a:focus {
+      color: var(--color-button-bg);
+      outline: none;
+    }
+    header {
+      position: sticky;
+      top: 0;
+      background-color: var(--color-bg);
+      box-shadow: 0 2px 10px var(--color-shadow);
+      height: var(--header-height);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      backdrop-filter: saturate(180%) blur(10px);
+    }
+    .logo {
+      font-weight: 800;
+      font-size: 0.8rem;
+      color: var(--color-primary);
+      letter-spacing: 0.05em;
+      user-select: none;
+    }
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+    nav a {
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 0.5rem 0;
+      position: relative;
+    }
+    nav a::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0%;
+      height: 2px;
+      background: var(--color-primary);
+      transition: width var(--transition-duration) ease;
+      border-radius: 2px;
+    }
+    nav a:hover::after, nav a:focus::after {
+      width: 100%;
+    }
+    .theme-toggle {
+      background: none;
+      border: 2px solid var(--color-primary);
+      border-radius: var(--border-radius);
+      padding: 0.3rem 0.8rem;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--color-primary);
+      transition: background-color var(--transition-duration), color var(--transition-duration);
+      user-select: none;
+    }
+    .theme-toggle:hover, .theme-toggle:focus {
+      background-color: var(--color-primary);
+      color: var(--color-button-text);
+      outline: none;
+    }
+    main {
+      max-width: var(--max-content-width);
+      margin: 3rem auto 4rem;
+      padding: 0 1.5rem;
+    }
+    h1.article-title {
+      font-weight: 800;
+      font-size: 3rem;
+      margin-bottom: 0.25rem;
+      color: var(--color-primary);
+      line-height: 1.1;
+      user-select: text;
+    }
+    .article-meta {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--color-text-muted);
+      margin-bottom: 2rem;
+      user-select: text;
+    }
+    .article-image {
+      width: 100%;
+      border-radius: var(--border-radius);
+      box-shadow: 0 8px 20px var(--color-shadow);
+      margin-bottom: 2.5rem;
+      display: block;
+      object-fit: cover;
+      max-height: 350px;
+      user-select: none;
+    }
+    .article-content p {
+      font-size: 1.1rem;
+      margin-bottom: 1.25rem;
+      color: var(--color-text-muted);
+      user-select: text;
+    }
+    .article-content h2 {
+      font-weight: 700;
+      font-size: 2rem;
+      margin-top: 3rem;
+      margin-bottom: 1rem;
+      color: var(--color-primary);
+      user-select: text;
+    }
+    .article-content pre {
+      background-color: var(--color-card-bg);
+      padding: 1rem 1.25rem;
+      border-radius: var(--border-radius);
+      overflow-x: auto;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.95rem;
+      color: var(--color-primary-light);
+      user-select: text;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 10px var(--color-shadow);
+    }
+    .article-content code {
+      background-color: var(--color-card-bg);
+      border-radius: 0.3rem;
+      padding: 0.15rem 0.3rem;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.95rem;
+      color: var(--color-primary-light);
+      user-select: text;
+    }
+    .back-link {
+      display: inline-block;
+      margin-bottom: 2rem;
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--color-primary);
+      border: 2px solid var(--color-primary);
+      border-radius: var(--border-radius);
+      padding: 0.4rem 1rem;
+      transition: background-color var(--transition-duration), color var(--transition-duration);
+      cursor: pointer;
+      user-select: none;
+      text-decoration: none;
+    }
+    .back-link:hover, .back-link:focus {
+      background-color: var(--color-primary);
+      color: var(--color-button-text);
+      outline: none;
+    }
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      color: var(--color-text-muted);
+      font-size: 0.9rem;
+    }
+    @media (max-width: 480px) {
+      main {
+        margin: 2rem auto 3rem;
+        padding: 0 1rem;
+      }
+      h1.article-title {
+        font-size: 2.25rem;
+      }
+      .article-content h2 {
+        font-size: 1.5rem;
+      }
+      nav {
+        gap: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo" tabindex="0" aria-label="Website Logo">🌍BumiLog</div>
+    <nav role="navigation" aria-label="Main navigation">
+      <a href="index.html" tabindex="0">Home</a>
+      <a href="dashboard-artikel.html" tabindex="0">Article</a>
+      <button class="theme-toggle" id="theme-toggle" aria-pressed="false" aria-label="Toggle dark mode">Dark Mode</button>
+    </nav>
+  </header>
+
+  <main>
+    <a href="index.html" class="back-link" aria-label="Back to article list">← Back to Articles</a>
+    <article id="article" role="article" aria-labelledby="article-title" tabindex="0">
+      <h1 id="article-title" class="article-title">Teknologi vs Manusia: Apakah AI Akan Menggantikan Kita?</h1>
+      <div class="article-meta">9 Juni 2025 — by Ardha F</div>
+      <img
+        src="https://images.unsplash.com/photo-1646583288948-24548aedffd8?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        alt="Screenshot of a computer screen showing CSS grid layout code and design"
+        class="article-image"
+        loading="lazy"
+      />
+      <div class="article-content">
+        <p>Perkembangan kecerdasan buatan (Artificial Intelligence/AI) telah merevolusi banyak aspek kehidupan manusia. Dari chatbot layanan pelanggan hingga mobil tanpa sopir, teknologi ini menunjukkan kemampuan luar biasa yang dahulu hanya bisa dibayangkan dalam film fiksi ilmiah. Namun, seiring meningkatnya kecanggihan AI, muncul pertanyaan yang semakin sering dilontarkan: Apakah AI akan menggantikan manusia?</p>
+        <h2>Apa Itu Kecerdasan Buatan (AI)?</h2>
+        <p>AI adalah cabang ilmu komputer yang berfokus pada pembuatan mesin atau sistem yang dapat menjalankan tugas-tugas yang biasanya memerlukan kecerdasan manusia. Contohnya:
+
+<ul>
+  <li>Mengenali suara dan gambar</li>
+  <li>Menjawab pertanyaan (seperti ChatGPT)</li>
+  <li>Bermain catur atau game strategi</li>
+  <li>Memprediksi pola cuaca atau penyakit</li>
+</ul>
+
+AI dibagi menjadi dua:
+
+<li> Sempit (Narrow AI): Dirancang untuk tugas spesifik (misalnya Siri, Google Translate).
+</li>
+<li>AI Umum (General AI): Mampu meniru seluruh spektrum kecerdasan manusia (masih dalam tahap pengembangan).
+  </li>
+  
+  
+  <h2>Bidang-Bidang yang Sudah Terpengaruh AI</h2>
+<ul>
+  <li><strong>Industri dan Manufaktur:</strong> Otomatisasi lini produksi dengan robot.</li>
+  <li><strong>Transportasi:</strong> Mobil otonom dan sistem navigasi cerdas.</li>
+  <li><strong>Layanan Kesehatan:</strong> Diagnostik berbasis AI, analisis citra medis.</li>
+  <li><strong>Pendidikan:</strong> Aplikasi belajar adaptif dan guru virtual.</li>
+  <li><strong>Kreativitas dan Media:</strong> Penulisan artikel otomatis, AI yang menggambar atau membuat musik.</li>
+</ul>
+
+<h2>Apa Saja Pekerjaan yang Terancam?</h2>
+AI diprediksi menggantikan beberapa pekerjaan berulang dan berbasis data, seperti:
+
+<ul>
+  <li>Kasir dan petugas tol</li>
+  <li>Akuntan entry data</li>
+  <li>Operator call center</li>
+  <li>Pengemudi taksi atau truk</li>
+</ul>
+
+Namun, AI juga menciptakan pekerjaan baru di bidang:
+
+<ul>
+  <li>Analisis data</li>
+  <li>Pengembangan dan pengawasan AI</li>
+  <li>Etika dan regulasi teknologi</li>
+</ul>
+
+<h2>Mengapa Manusia Masih Dibutuhkan?
+</h2>
+AI unggul dalam kecepatan dan akurasi, tapi belum mampu menandingi sisi manusiawi, seperti:
+
+<ul>
+  <li>Empati dan moralitas</li>
+  <li>Kreativitas sejati</li>
+  <li>Pengambilan keputusan dalam konteks sosial dan budaya</li>
+</ul>
+Contoh: Dokter bukan hanya memberi resep, tapi juga memberi ketenangan dan harapan. Guru bukan hanya menyampaikan pelajaran, tapi juga membangun karakter.
+
+<h2>Tantangan dan Resiko
+</h2>
+
+<ul>
+  <li>Pengangguran massal jika tidak diantisipasi dengan pelatihan ulang.</li>
+  <li>Ketimpangan ekonomi, karena pemilik teknologi semakin dominan.</li>
+  <li>Etika dan privasi, karena AI bisa disalahgunakan.</li>
+  <li>Kecanduan teknologi, yang mengurangi kualitas hidup manusia.</li>
+</ul>
+
+<h2>Solusi dan Peran Manusia ke Depan
+</h2>
+
+<ul>
+  <li>Beradaptasi dengan perkembangan teknologi melalui pendidikan dan pelatihan ulang.</li>
+  <li>Mendorong kolaborasi manusia dan mesin, bukan kompetisi.</li>
+  <li>Membangun regulasi dan etika penggunaan AI agar teknologi melayani manusia, bukan sebaliknya.</li>
+  <li>Mengembangkan soft skill seperti komunikasi, kepemimpinan, dan empati — yang tidak bisa ditiru AI.</li>
+</ul>
+
+<hr>
+<p><strong>Kesimpulan:</strong> AI bukanlah musuh manusia, melainkan alat yang bisa sangat bermanfaat jika digunakan secara bijak. Masa depan bukan tentang manusia atau mesin, tetapi manusia bersama mesin. Yang perlu kita lakukan adalah mempersiapkan diri agar tetap relevan, adaptif, dan manusiawi di era teknologi yang terus berkembang.</p>
+
+
+</div>
+    </article>
+  </main>
+
+  <footer>
+    &copy; 2025 🌍BumiLog
+  </footer>
+
+  <script>
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const rootElement = document.documentElement;
+
+    function setTheme(theme) {
+      if (theme === 'dark') {
+        rootElement.setAttribute('data-theme', 'dark');
+        themeToggleBtn.textContent = 'Light Mode';
+        themeToggleBtn.setAttribute('aria-pressed', 'true');
+      } else {
+        rootElement.removeAttribute('data-theme');
+        themeToggleBtn.textContent = 'Dark Mode';
+        themeToggleBtn.setAttribute('aria-pressed', 'false');
+      }
+    }
+
+    const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    setTheme(savedTheme);
+
+    themeToggleBtn.addEventListener('click', () => {
+      const currentTheme = rootElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      setTheme(newTheme);
+      localStorage.setItem('theme', newTheme);
+    });
+  </script>
+</body>
+</html>
+

@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mengapa Lagu Bikin Hati Meleleh atau Jantungan?</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      /* Light theme colors */
+      --color-bg: #ffffff;
+      --color-text: #374151;
+      --color-text-muted: #6b7280;
+      --color-primary: #111827;
+      --color-primary-light: #374151;
+      --color-button-bg: #111827;
+      --color-button-text: #ffffff;
+      --color-button-hover-bg: #374151;
+      --color-shadow: rgba(0, 0, 0, 0.05);
+      --border-radius: 0.75rem;
+      --transition-duration: 0.3s;
+      --max-content-width: 760px;
+      --header-height: 64px;
+    }
+    [data-theme="dark"] {
+      --color-bg: #1e293b;
+      --color-text: #f3f4f6;
+      --color-text-muted: #9ca3af;
+      --color-primary: #d1d5db;
+      --color-primary-light: #e5e7eb;
+      --color-button-bg: #f3f4f6;
+      --color-button-text: #1e293b;
+      --color-button-hover-bg: #e0e7ff;
+      --color-shadow: rgba(0, 0, 0, 0.7);
+    }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.75;
+      font-size: 18px;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    a {
+      color: var(--color-primary);
+      text-decoration: none;
+      transition: color var(--transition-duration) ease;
+    }
+    a:hover, a:focus {
+      color: var(--color-button-bg);
+      outline: none;
+    }
+    header {
+      position: sticky;
+      top: 0;
+      background-color: var(--color-bg);
+      box-shadow: 0 2px 10px var(--color-shadow);
+      height: var(--header-height);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      backdrop-filter: saturate(180%) blur(10px);
+    }
+    .logo {
+      font-weight: 800;
+      font-size: 0.8rem;
+      color: var(--color-primary);
+      letter-spacing: 0.05em;
+      user-select: none;
+    }
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+    nav a {
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 0.5rem 0;
+      position: relative;
+    }
+    nav a::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0%;
+      height: 2px;
+      background: var(--color-primary);
+      transition: width var(--transition-duration) ease;
+      border-radius: 2px;
+    }
+    nav a:hover::after, nav a:focus::after {
+      width: 100%;
+    }
+    .theme-toggle {
+      background: none;
+      border: 2px solid var(--color-primary);
+      border-radius: var(--border-radius);
+      padding: 0.3rem 0.8rem;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--color-primary);
+      transition: background-color var(--transition-duration), color var(--transition-duration);
+      user-select: none;
+    }
+    .theme-toggle:hover, .theme-toggle:focus {
+      background-color: var(--color-primary);
+      color: var(--color-button-text);
+      outline: none;
+    }
+    main {
+      max-width: var(--max-content-width);
+      margin: 3rem auto 4rem;
+      padding: 0 1.5rem;
+    }
+    h1.article-title {
+      font-weight: 800;
+      font-size: 3rem;
+      margin-bottom: 0.25rem;
+      color: var(--color-primary);
+      line-height: 1.1;
+      user-select: text;
+    }
+    .article-meta {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--color-text-muted);
+      margin-bottom: 2rem;
+      user-select: text;
+    }
+    .article-image {
+      width: 100%;
+      border-radius: var(--border-radius);
+      box-shadow: 0 8px 20px var(--color-shadow);
+      margin-bottom: 2.5rem;
+      display: block;
+      object-fit: cover;
+      max-height: 350px;
+      user-select: none;
+    }
+    .article-content p {
+      font-size: 1.1rem;
+      margin-bottom: 1.25rem;
+      color: var(--color-text-muted);
+      user-select: text;
+    }
+    .article-content h2 {
+      font-weight: 700;
+      font-size: 2rem;
+      margin-top: 3rem;
+      margin-bottom: 1rem;
+      color: var(--color-primary);
+      user-select: text;
+    }
+    .article-content pre {
+      background-color: var(--color-card-bg);
+      padding: 1rem 1.25rem;
+      border-radius: var(--border-radius);
+      overflow-x: auto;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.95rem;
+      color: var(--color-primary-light);
+      user-select: text;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 10px var(--color-shadow);
+    }
+    .article-content code {
+      background-color: var(--color-card-bg);
+      border-radius: 0.3rem;
+      padding: 0.15rem 0.3rem;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.95rem;
+      color: var(--color-primary-light);
+      user-select: text;
+    }
+    .back-link {
+      display: inline-block;
+      margin-bottom: 2rem;
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--color-primary);
+      border: 2px solid var(--color-primary);
+      border-radius: var(--border-radius);
+      padding: 0.4rem 1rem;
+      transition: background-color var(--transition-duration), color var(--transition-duration);
+      cursor: pointer;
+      user-select: none;
+      text-decoration: none;
+    }
+    .back-link:hover, .back-link:focus {
+      background-color: var(--color-primary);
+      color: var(--color-button-text);
+      outline: none;
+    }
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      color: var(--color-text-muted);
+      font-size: 0.9rem;
+    }
+    @media (max-width: 480px) {
+      main {
+        margin: 2rem auto 3rem;
+        padding: 0 1rem;
+      }
+      h1.article-title {
+        font-size: 2.25rem;
+      }
+      .article-content h2 {
+        font-size: 1.5rem;
+      }
+      nav {
+        gap: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo" tabindex="0" aria-label="Website Logo">🌍BumiLog</div>
+    <nav role="navigation" aria-label="Main navigation">
+      <a href="index.html" tabindex="0">Home</a>
+      <a href="dashboard-artikel.html" tabindex="0">Article</a>
+      <button class="theme-toggle" id="theme-toggle" aria-pressed="false" aria-label="Toggle dark mode">Dark Mode</button>
+    </nav>
+  </header>
+
+  <main>
+    <a href="index.html" class="back-link" aria-label="Back to article list">← Back to Articles</a>
+    <article id="article" role="article" aria-labelledby="article-title" tabindex="0">
+      <h1 id="article-title" class="article-title">Mengapa Lagu Bikin Hati Meleleh atau Jantungan?</h1>
+      <div class="article-meta">01 Oktober 2025 — by Ardha F</div>
+      <img
+        src="https://images.unsplash.com/photo-1724388471774-58ef5277d40d?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        alt="Screenshot of a computer screen showing CSS grid layout code and design"
+        class="article-image"
+        loading="lazy"
+      />
+      <div class="article-content">
+<p>
+    Pernah nggak sih kamu mendadak semangat pas dengerin lagu upbeat di pagi hari, atau malah mellow gara-gara lagu galau di playlist? Musik punya kekuatan ajaib untuk mengubah suasana hati, bikin nostalgia, bahkan bikin kita ketagihan dengerin lagu yang sama berulang-ulang. Tapi, apa sih rahasianya? Yuk, kita intip sains di balik musik favoritmu, dari gelombang suara sampai efeknya di otak!
+</p>
+
+<h2>Gelombang Suara: Getaran yang 'Menari' di Telingamu</h2>
+<p>
+    Semua musik dimulai dari gelombang suara, yaitu getaran udara yang bergerak ke telinga kita. Bayangin seperti riak air di kolam—getaran ini punya frekuensi (nada tinggi atau rendah) dan amplitudo (keras atau pelan). Ketika kamu dengerin beat drum atau petikan gitar, telinga menangkap getaran ini dan otak menerjemahkannya jadi sesuatu yang bikin kamu pengin joget atau nangis.
+</p>
+<p>
+    <strong>Fakta keren:</strong> Frekuensi rendah (seperti bass di lagu EDM) cenderung bikin tubuh terasa berenergi karena getarannya terasa sampai ke tulang. Sementara nada tinggi, seperti suara penyanyi soprano, bisa bikin bulu kuduk merinding karena otak kita mengaitkannya dengan emosi intens.
+</p>
+
+<h2>Otakmu Jatuh Cinta dengan Musik</h2>
+<p>
+    Saat kamu mendengar lagu favorit, otakmu nggak cuma duduk manis. Bagian otak bernama sistem limbik, yang ngurusin emosi, langsung aktif. Musik yang catchy atau emosional memicu pelepasan dopamin, hormon bahagia yang bikin kamu merasa senang. Makanya, lagu seperti “Happy” dari Pharrell Williams atau OST drama Korea favoritmu bisa bikin mood naik seketika.
+</p>
+<p>
+    Penelitian dari McGill University (2011) menunjukkan bahwa puncak emosi saat mendengar musik (seperti bagian chorus yang dramatis) bisa memicu dopamin sama seperti saat kamu makan cokelat atau jatuh cinta. Jadi, kalau kamu nggak bisa berhenti dengerin lagu tertentu, itu karena otakmu lagi “ketagihan” dopamin!
+</p>
+
+<h2>Kenapa Lagu Tertentu Bikin Ketagihan?</h2>
+<p>
+    Pernah nggak denger lagu yang langsung nempel di kepala? Itu namanya <em>earworm</em>, dan ada alasan sains kenapa ini terjadi:
+</p>
+<ul>
+    <li><strong>Pola berulang:</strong> Lagu dengan ritme atau melodi sederhana, seperti “Baby Shark” atau pop hits, gampang diingat karena otak suka pola yang mudah diprediksi.</li>
+    <li><strong>Kecepatan tempo:</strong> Lagu dengan tempo 120-140 BPM (seperti kebanyakan lagu pop) cocok dengan detak jantung manusia, bikin kita merasa “nyambung”.</li>
+    <li><strong>Emosi dan memori:</strong> Lagu yang kamu dengar saat momen spesial (misalnya, pacaran atau wisuda) bakal nempel kuat karena otak mengaitkannya dengan emosi kuat.</li>
+</ul>
+<p>
+    Contohnya, lagu “Bohemian Rhapsody” dari Queen punya perpaduan ritme lambat, cepat, dan dramatis, bikin otakmu terus penasaran. Makanya, meski lagunya panjang, kamu nggak bosan!
+</p>
+
+<h2>Musik dan Emosi: Bisa Bikin Nangis atau Semangat</h2>
+<p>
+    Musik punya cara unik untuk “berbicara” sama emosi kita. Misalnya:
+</p>
+<ul>
+    <li>
+        <strong>Lagu sedih</strong> (seperti “My Heart Will Go On” dari Celine Dion) sering pakai nada minor dan tempo lambat, yang bikin otak merasa “melankolis”. Anehnya, penelitian dari University of Tokyo (2015) bilang orang justru suka lagu sedih karena membantu memproses emosi, kayak terapi gratis!
+    </li>
+    <li>
+        <strong>Lagu upbeat</strong> (seperti “Sweet Child O’ Mine” dari Guns N’ Roses) pakai nada mayor dan tempo cepat, yang bikin kamu pengin lompat-lompat atau lari lebih kencang di treadmill.
+    </li>
+</ul>
+<p>
+    <strong>Fun fact:</strong> Musik juga bisa mengelabui otak. Misalnya, soundtrack film horor dengan suara mendadak keras atau nada disonan bikin jantungan karena otak mengira ada bahaya!
+</p>
+
+<h2>Eksperimen Seru: Buat Playlist Sesuai Mood</h2>
+<p>
+    Mau coba sains musik di rumah? Buat playlist berdasarkan tujuan emosi:
+</p>
+<ul>
+    <li><strong>Bangun semangat:</strong> Pilih lagu dengan tempo 120-140 BPM, seperti “Uptown Funk” atau “Can’t Stop the Feeling”.</li>
+    <li><strong>Relaksasi:</strong> Dengar lagu instrumental dengan tempo lambat, seperti musik klasik Mozart atau lo-fi beats.</li>
+    <li><strong>Nostalgia:</strong> Putar lagu dari masa kecilmu—otakmu bakal ngeluarin dopamin ekstra karena kenangan.</li>
+</ul>
+<p>
+    Coba dengar playlist ini sambil perhatikan perubahan mood. Kamu bisa catat lagu mana yang paling bikin semangat atau tenang, kayak eksperimen sains kecil!
+</p>
+
+<h2>Musik Adalah Sihir yang Bisa Dijelaskan</h2>
+<p>
+    Jadi, kenapa musik favoritmu begitu powerful? Karena gelombang suara, dopamin, dan emosi bekerja sama seperti resep sihir di otakmu. Entah itu lagu pop, dangdut, atau klasik, setiap nada punya cara untuk nyanyi langsung ke hati. Jadi, lain kali kamu nggak bisa berhenti nyanyi di kamar mandi, ingat: itu cuma sains yang lagi bikin kamu bahagia!
+</p>
+
+</div>
+    </article>
+  </main>
+
+  <footer>
+    &copy; 2025 🌍BumiLog
+  </footer>
+
+  <script>
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const rootElement = document.documentElement;
+
+    function setTheme(theme) {
+      if (theme === 'dark') {
+        rootElement.setAttribute('data-theme', 'dark');
+        themeToggleBtn.textContent = 'Light Mode';
+        themeToggleBtn.setAttribute('aria-pressed', 'true');
+      } else {
+        rootElement.removeAttribute('data-theme');
+        themeToggleBtn.textContent = 'Dark Mode';
+        themeToggleBtn.setAttribute('aria-pressed', 'false');
+      }
+    }
+
+    const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    setTheme(savedTheme);
+
+    themeToggleBtn.addEventListener('click', () => {
+      const currentTheme = rootElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      setTheme(newTheme);
+      localStorage.setItem('theme', newTheme);
+    });
+  </script>
+</body>
+</html>
+
