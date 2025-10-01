@@ -160,6 +160,32 @@
       color: var(--color-primary);
       user-select: text;
     }
+    .category-filter {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+    .category-btn {
+      background: none;
+      border: 2px solid var(--color-primary);
+      border-radius: var(--border-radius);
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--color-primary);
+      transition: background-color var(--transition-duration), color var(--transition-duration);
+    }
+    .category-btn:hover, .category-btn:focus {
+      background-color: var(--color-primary);
+      color: var(--color-button-text);
+      outline: none;
+    }
+    .category-btn.active {
+      background-color: var(--color-primary);
+      color: var(--color-button-text);
+    }
     .articles-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -217,6 +243,13 @@
       font-weight: 600;
       user-select: text;
     }
+    article .category {
+      font-size: 0.875rem;
+      color: var(--color-primary);
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      user-select: text;
+    }
     footer {
       text-align: center;
       padding: 2rem 1rem;
@@ -240,6 +273,13 @@
       .search-container {
         margin: 0 1rem;
       }
+      .category-filter {
+        gap: 0.5rem;
+      }
+      .category-btn {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.85rem;
+      }
     }
   </style>
 </head>
@@ -257,24 +297,30 @@
 
   <main>
     <h1 class="page-title">All Articles</h1>
-    <section class="articles-grid" aria-label="List of articles">
+    <div class="category-filter" role="tablist" aria-label="Category filter">
+      <button class="category-btn active" data-category="all" role="tab" aria-selected="true">All</button>
+      <button class="category-btn" data-category="Science" role="tab" aria-selected="false">Science-Trivia</button>
+      <button class="category-btn" data-category="Chemistry" role="tab" aria-selected="false">Chemistry</button>
+      <button class="category-btn" data-category="Mathematics" role="tab" aria-selected="false">Mathematics</button>
 
-      <article class="card" tabindex="0" role="article" aria-labelledby="title1" aria-describedby="summary1">
+    </div>
+    <section class="articles-grid" aria-label="List of articles">
+      <article class="card" tabindex="0" role="article" aria-labelledby="title1" aria-describedby="summary1" data-category="Science">
         <a href="artikel4.html">
+          <div class="category">Science-Trivia</div>
           <h2 class="title" id="title1">Mengapa Lagu Bikin Hati Meleleh atau Jantungan?</h2>
           <p class="summary" id="summary1">Musik punya kekuatan ajaib untuk mengubah suasana hati, bikin nostalgia, bahkan bikin kita ketagihan dengerin lagu yang sama berulang-ulang. </p>
           <div class="meta">October 01, 2025 — by Ardha</div>
         </a>
       </article>
-
-       <article class="card" tabindex="0" role="article" aria-labelledby="title1" aria-describedby="summary1">
+      <article class="card" tabindex="0" role="article" aria-labelledby="title2" aria-describedby="summary2" data-category="Science">
         <a href="artikel5.html">
-          <h2 class="title" id="title1">Perjalanan Waktu: Antara Sihir Film dan Fakta Sains Einstein</h2>
-          <p class="summary" id="summary1">Siapa yang nggak kepincut sama ide perjalanan waktu? Dari mesin waktu Back to the Future sampai paradox seru di Avengers: Endgame, film-film populer bikin kita bermimpi bisa lompat ke masa lalu atau masa depan.</p>
+          <div class="category">Science-Trivia</div>
+          <h2 class="title" id="title2">Perjalanan Waktu: Antara Sihir Film dan Fakta Sains Einstein</h2>
+          <p class="summary" id="summary2">Siapa yang nggak kepincut sama ide perjalanan waktu? Dari mesin waktu Back to the Future sampai paradox seru di Avengers: Endgame, film-film populer bikin kita bermimpi bisa lompat ke masa lalu atau masa depan.</p>
           <div class="meta">October 01, 2025 — by Ardha</div>
         </a>
       </article>
-      
     </section>
   </main>
 
@@ -285,6 +331,9 @@
   <script>
     const themeToggleBtn = document.getElementById('theme-toggle');
     const rootElement = document.documentElement;
+    const searchBar = document.getElementById('search-bar');
+    const articles = document.querySelectorAll('.card');
+    const categoryButtons = document.querySelectorAll('.category-btn');
 
     function setTheme(theme) {
       if (theme === 'dark') {
@@ -309,19 +358,40 @@
     });
 
     // Search functionality
-    const searchBar = document.getElementById('search-bar');
-    const articles = document.querySelectorAll('.card');
-
     searchBar.addEventListener('input', (e) => {
       const searchText = e.target.value.toLowerCase();
+      const activeCategory = document.querySelector('.category-btn.active').dataset.category;
       articles.forEach(article => {
         const title = article.querySelector('.title').textContent.toLowerCase();
         const summary = article.querySelector('.summary').textContent.toLowerCase();
-        if (title.includes(searchText) || summary.includes(searchText)) {
-          article.style.display = 'flex';
-        } else {
-          article.style.display = 'none';
-        }
+        const category = article.dataset.category;
+        const matchesSearch = title.includes(searchText) || summary.includes(searchText);
+        const matchesCategory = activeCategory === 'all' || category === activeCategory;
+        article.style.display = matchesSearch && matchesCategory ? 'flex' : 'none';
+      });
+    });
+
+    // Category filter functionality
+    categoryButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        categoryButtons.forEach(btn => {
+          btn.classList.remove('active');
+          btn.setAttribute('aria-selected', 'false');
+        });
+        button.classList.add('active');
+        button.setAttribute('aria-selected', 'true');
+        
+        const selectedCategory = button.dataset.category;
+        const searchText = searchBar.value.toLowerCase();
+        
+        articles.forEach(article => {
+          const title = article.querySelector('.title').textContent.toLowerCase();
+          const summary = article.querySelector('.summary').textContent.toLowerCase();
+          const category = article.dataset.category;
+          const matchesSearch = title.includes(searchText) || summary.includes(searchText);
+          const matchesCategory = selectedCategory === 'all' || category === selectedCategory;
+          article.style.display = matchesSearch && matchesCategory ? 'flex' : 'none';
+        });
       });
     });
   </script>
