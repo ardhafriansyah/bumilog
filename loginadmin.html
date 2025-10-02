@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard | BumiLog</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet" />
+    <style>
+      /* Semua style CSS tetap sama, tidak perlu diubah */
+      :root { --color-bg: #f9fafb; --color-text: #374151; --color-text-muted: #6b7280; --color-primary: #111827; --color-card-bg: #ffffff; --color-button-bg: #111827; --color-button-text: #ffffff; --color-button-hover-bg: #374151; --color-shadow: rgba(0, 0, 0, 0.05); --color-border: #e5e7eb; --border-radius: 0.75rem; --transition-duration: 0.3s; --header-height: 64px; } [data-theme="dark"] { --color-bg: #1e293b; --color-text: #f3f4f6; --color-text-muted: #9ca3af; --color-primary: #e0e7ff; --color-card-bg: #334155; --color-button-bg: #f3f4f6; --color-button-text: #1e293b; --color-button-hover-bg: #e0e7ff; --color-shadow: rgba(0, 0, 0, 0.25); --color-border: #475569; } * { box-sizing: border-box; margin: 0; padding: 0; } body { font-family: 'Poppins', sans-serif; background-color: var(--color-bg); color: var(--color-text); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; } header { position: sticky; top: 0; background-color: var(--color-bg); box-shadow: 0 2px 10px var(--color-shadow); height: var(--header-height); z-index: 1000; display: flex; align-items: center; justify-content: space-between; padding: 0 2rem; backdrop-filter: saturate(180%) blur(10px); width: 100%; border-bottom: 1px solid var(--color-border); } .logo { font-weight: 800; font-size: 1.2rem; color: var(--color-primary); letter-spacing: 0.05em; } nav { display: flex; align-items: center; gap: 1.5rem; } nav a { font-weight: 600; font-size: 1rem; color: var(--color-text-muted); padding: 0.5rem 0.25rem; position: relative; cursor: pointer; transition: color var(--transition-duration); } nav a:hover, nav a.active { color: var(--color-primary); } nav a.active::after { content: ""; position: absolute; bottom: -2px; left: 0; width: 100%; height: 2px; background: var(--color-primary); border-radius: 2px; } .theme-toggle { background: none; border: none; cursor: pointer; font-size: 1.5rem; color: var(--color-text-muted); transition: color var(--transition-duration); } .theme-toggle:hover { color: var(--color-primary); } .main-content { flex-grow: 1; padding: 2.5rem; overflow-y: auto; } .main-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; } .main-header h1 { font-weight: 800; font-size: 2.5rem; } .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; margin-bottom: 2.5rem; } .stat-card { background-color: var(--color-card-bg); padding: 1.5rem; border-radius: var(--border-radius); box-shadow: 0 4px 10px var(--color-shadow); border: 1px solid var(--color-border); display: flex; align-items: center; gap: 1rem; transition: transform 0.2s ease, box-shadow 0.2s ease; } .stat-card:hover { transform: translateY(-3px); } .stat-card .icon { width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center; background-color: var(--color-bg); } .stat-card .icon svg { color: var(--color-primary); } .stat-card .info h3 { font-size: 1rem; color: var(--color-text-muted); font-weight: 600; } .stat-card .info .value { font-size: 2rem; font-weight: 800; color: var(--color-text); } .content-wrapper { background-color: var(--color-card-bg); padding: 2rem; border-radius: var(--border-radius); box-shadow: 0 4px 10px var(--color-shadow); border: 1px solid var(--color-border); } table { width: 100%; border-collapse: collapse; } th, td { padding: 1rem; text-align: left; border-bottom: 1px solid var(--color-border); } th { font-weight: 600; color: var(--color-text-muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px; } td { font-size: 0.95rem; } .btn { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 0.9rem; background-color: var(--color-button-bg); color: var(--color-button-text); padding: 0.6rem 1.5rem; border: none; border-radius: var(--border-radius); cursor: pointer; transition: all var(--transition-duration) ease; user-select: none; } .btn:hover { background-color: var(--color-button-hover-bg); transform: scale(1.05); } .actions-cell button { background: none; border: none; cursor: pointer; padding: 0.25rem 0.5rem; margin: 0 0.25rem; font-weight: 600; font-size: 0.9rem; color: var(--color-text-muted); transition: color var(--transition-duration); } .actions-cell .btn-edit:hover { color: #3b82f6; } .actions-cell .btn-delete:hover { color: #ef4444; } .modal { position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); display: none; align-items: center; justify-content: center; } .modal-content { background-color: var(--color-card-bg); padding: 2.5rem; border-radius: var(--border-radius); width: 90%; max-width: 550px; box-shadow: 0 5px 20px var(--color-shadow); border: 1px solid var(--color-border); } .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; } .modal-header h2 { font-size: 1.5rem; font-weight: 700; color: var(--color-text); } .close-btn { font-size: 2rem; cursor: pointer; color: var(--color-text-muted); line-height: 1; } .close-btn:hover { color: var(--color-text); } .form-group { margin-bottom: 1.25rem; } .form-group label { display: block; font-weight: 600; font-size: 0.9rem; color: var(--color-text-muted); margin-bottom: 0.5rem; } .form-group input, .form-group textarea { width: 100%; padding: 0.75rem; border-radius: var(--border-radius); border: 1px solid var(--color-border); background-color: var(--color-bg); color: var(--color-text); font-family: 'Poppins', sans-serif; font-size: 1rem; } .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--color-primary); box-shadow: 0 0 0 2px var(--color-primary-light); } .view-section { display: none; } .view-section.active { display: block; }
+      /* Tambahan style untuk login dan search */
+      #login-view { display: flex; flex-direction: column; align-items: center; justify-content: center; height: calc(100vh - var(--header-height)); }
+      #login-form { width: 100%; max-width: 400px; padding: 2rem; background-color: var(--color-card-bg); border-radius: var(--border-radius); box-shadow: 0 4px 10px var(--color-shadow); border: 1px solid var(--color-border); }
+      #logout-btn { background: none; border: none; cursor: pointer; font-weight: 600; font-size: 1rem; color: var(--color-text-muted); transition: color var(--transition-duration); }
+      #logout-btn:hover { color: var(--color-primary); }
+      .search-group { margin-bottom: 1.5rem; }
+      .search-group input { width: 100%; padding: 0.75rem; border-radius: var(--border-radius); border: 1px solid var(--color-border); background-color: var(--color-bg); color: var(--color-text); font-size: 1rem; }
+      .loading { opacity: 0.5; pointer-events: none; }
+    </style>
+</head>
+<body>
+    <div style="display: flex; flex-direction: column; width: 100%;">
+        <header>
+            <div class="logo">🌍BumiLog Admin</div>
+           <nav role="navigation">
+    <a id="nav-dashboard" class="nav-link active">Dashboard</a>
+    <!-- <a id="nav-articles" class="nav-link">Artikel</a> -->
+    <a id="nav-comments" class="nav-link">Komentar</a>
+    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">☀️</button>
+    <button id="logout-btn" style="display: none;">Logout</button>
+</nav>
+        </header>
+
+        <main class="main-content" id="main-content" style="display: none;">
+            <header class="main-header"><h1 id="view-title">Dashboard</h1><button class="btn" id="add-article-btn" style="display: none;">+ Tambah Artikel</button></header>
+            <section id="dashboard-view" class="view-section active"><div class="stats-grid"><div class="stat-card"><div class="icon"><svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 01-2.25 2.25H6.75A2.25 2.25 0 014.5 18V6.375c0-.621.504-1.125 1.125-1.125H9.75"></path></svg></div><div class="stat-card"><div class="icon"><svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="24"><path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m-7.5-2.962A3.375 3.375 0 0110.5 12h3c1.406 0 2.624.814 3.182 2.016M15 15.75a3 3 0 01-6 0M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></div><div class="info"><h3>Total Pengunjung</h3><p class="value" id="total-visitors">0</p></div></div></div><div class="content-wrapper"><h2>Selamat Datang, Admin!</h2><p style="color: var(--color-text-muted); margin-top: 0.5rem;">Gunakan panel ini untuk mengelola semua konten di website BumiLog. Pilih menu 'Artikel' di atas untuk memulai.</p></div></section>
+           
+            <section id="articles-view" class="view-section">
+                
+                <div class="search-group">
+                    <input type="text" id="article-search" placeholder="Cari artikel berdasarkan judul...">
+                </div>
+                <div class="content-wrapper"><table><thead><tr><th>Judul</th><th>Penulis</th><th>Tanggal</th><th>Tindakan</th></tr></thead><tbody id="articles-table-body"></tbody></table></div>
+            </section>
+            </section>
+
+        <section id="comments-view" class="view-section">
+            <div class="content-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Pengguna</th>
+                            <th>Komentar</th>
+                            <th>Tanggal</th>
+                            <th>Tindakan</th>
+                        </tr>
+                    </thead>
+                    <tbody id="comments-table-body">
+                        </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+        </main>
+
+
+        
+        <section id="login-view">
+            <form id="login-form">
+                <h2>Login Admin</h2>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit" class="btn">Login</button>
+                <p id="login-error" style="color: #ef4444; display: none;"></p>
+            </form>
+        </section>
+    </div>
+
+    <div id="article-modal" class="modal"><div class="modal-content"><div class="modal-header"><h2 id="modal-title">Tambah Artikel Baru</h2><span class="close-btn" id="close-modal-btn">×</span></div><form id="article-form"><input type="hidden" id="article-id"><div class="form-group"><label for="article-title">Judul Artikel</label><input type="text" id="article-title" placeholder="cth: Manfaat Tidur Cukup" required></div><div class="form-group"><label for="article-author">Nama Penulis</label><input type="text" id="article-author" value="Ardha F" required></div><div class="form-group"><label for="article-content">Konten Artikel</label><textarea id="article-content" rows="10" placeholder="Tulis konten lengkap artikel di sini..." required></textarea></div><div class="form-group"><label for="article-summary">Ringkasan</label><textarea id="article-summary" rows="4" placeholder="Tulis ringkasan singkat artikel di sini..." required></textarea></div><button type="submit" class="btn">Simpan Artikel</button></form></div></div>
+    
+   <script type="module">
+    // 1. Import fungsi yang dibutuhkan dari Firebase SDK
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
+    import { getFirestore, collection, query, orderBy, onSnapshot, doc, addDoc, updateDoc, deleteDoc, getDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
+    import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
+
+    // 2. Konfigurasi Firebase Anda
+    const firebaseConfig = {
+        apiKey: "AIzaSyDXOWtKDPeB8uGUkABO5PmUDmj6SS193Lc",
+        authDomain: "bumilog-407df.firebaseapp.com",
+        projectId: "bumilog-407df",
+        storageBucket: "bumilog-407df.firebasestorage.app",
+        messagingSenderId: "897291809739",
+        appId: "1:897291809739:web:12ad13c6c51f31f422fc4e",
+        measurementId: "G-QGGXMMFH2L"
+    };
+
+    // 3. Inisialisasi Firebase, Firestore, dan Auth
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth(app);
+
+    // --- SCRIPT UTAMA APLIKASI ---
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- Variabel Elemen DOM ---
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const rootElement = document.documentElement;
+        const navLinks = document.querySelectorAll('.nav-link');
+        const views = document.querySelectorAll('.view-section');
+        const viewTitle = document.getElementById('view-title');
+        const addArticleBtn = document.getElementById('add-article-btn');
+        const articlesTableBody = document.getElementById('articles-table-body');
+        const totalArticlesEl = document.getElementById('total-articles');
+        const totalVisitorsEl = document.getElementById('total-visitors');
+        const modal = document.getElementById('article-modal');
+        const closeModalBtn = document.getElementById('close-modal-btn');
+        const articleForm = document.getElementById('article-form');
+        const loginForm = document.getElementById('login-form');
+        const logoutBtn = document.getElementById('logout-btn');
+        const mainContent = document.getElementById('main-content');
+        const loginView = document.getElementById('login-view');
+        // BARU: Variabel untuk komentar
+        const commentsTableBody = document.getElementById('comments-table-body');
+
+        let articlesData = [];
+
+        // --- Fungsi Tema ---
+        function setTheme(theme) { 
+            if (theme === 'dark') { 
+                rootElement.setAttribute('data-theme', 'dark'); 
+                themeToggleBtn.textContent = '☀️'; 
+                localStorage.setItem('theme', 'dark'); 
+            } else { 
+                rootElement.removeAttribute('data-theme'); 
+                themeToggleBtn.textContent = '🌙'; 
+                localStorage.setItem('theme', 'light'); 
+            } 
+        }
+        themeToggleBtn.addEventListener('click', () => { 
+            const currentTheme = rootElement.getAttribute('data-theme') ? 'dark' : 'light'; 
+            setTheme(currentTheme === 'dark' ? 'light' : 'dark'); 
+        });
+        setTheme(localStorage.getItem('theme') || 'light');
+
+        // --- Fungsi Navigasi / Pindah Tampilan ---
+        // DIMODIFIKASI untuk mengenali 'comments'
+        function switchView(targetId) { 
+            views.forEach(view => view.classList.toggle('active', view.id === `${targetId}-view`)); 
+            navLinks.forEach(link => link.classList.toggle('active', link.id === `nav-${targetId}`)); 
+            
+            if (targetId === 'articles') {
+                viewTitle.textContent = 'Manajemen Artikel';
+            } else if (targetId === 'comments') {
+                viewTitle.textContent = 'Manajemen Komentar';
+            } else {
+                viewTitle.textContent = 'Dashboard';
+            }
+            addArticleBtn.style.display = targetId === 'articles' ? 'inline-block' : 'none'; 
+        }
+        navLinks.forEach(link => { 
+            link.addEventListener('click', () => switchView(link.id.split('-')[1])); 
+        });
+
+        // --- Logika Autentikasi ---
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                loginView.style.display = 'none';
+                mainContent.style.display = 'block';
+                logoutBtn.style.display = 'inline-block';
+                loadData();
+            } else {
+                loginView.style.display = 'flex';
+                mainContent.style.display = 'none';
+                logoutBtn.style.display = 'none';
+            }
+        });
+
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+            } catch (error) {
+                document.getElementById('login-error').textContent = 'Email atau password salah.';
+                document.getElementById('login-error').style.display = 'block';
+            }
+        });
+
+        logoutBtn.addEventListener('click', () => signOut(auth));
+
+        // --- Fungsi Memuat Semua Data dari Firestore ---
+        function loadData() {
+            // 1. Listener untuk Artikel
+            const articlesQuery = query(collection(db, 'articles'), orderBy('createdAt', 'desc'));
+            onSnapshot(articlesQuery, (snapshot) => {
+                totalArticlesEl.textContent = snapshot.size;
+                articlesData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                renderArticles(articlesData);
+            }, error => console.error("Error fetching articles: ", error));
+
+            // 2. Listener untuk Pengunjung
+            const statsDocRef = doc(db, 'stats', 'visitors');
+            onSnapshot(statsDocRef, (doc) => {
+                if (doc.exists()) totalVisitorsEl.textContent = doc.data().count || 0;
+            }, error => console.error("Error fetching visitor stats: ", error));
+
+            // BARU: 3. Listener untuk Komentar
+            const commentsQuery = query(collection(db, 'comments'), orderBy('timestamp', 'desc'));
+            onSnapshot(commentsQuery, (snapshot) => {
+                commentsTableBody.innerHTML = '';
+                if (snapshot.empty) {
+                    commentsTableBody.innerHTML = `<tr><td colspan="4" style="text-align:center; color: var(--color-text-muted);">Belum ada komentar.</td></tr>`;
+                    return;
+                }
+                snapshot.forEach(doc => {
+                    const comment = { id: doc.id, ...doc.data() };
+                    const row = document.createElement('tr');
+                    const formattedDate = comment.timestamp?.toDate().toLocaleString('id-ID') || 'N/A';
+                    
+                    row.innerHTML = `
+                        <td>
+                            <img src="${comment.avatar}" alt="Avatar" width="30" style="border-radius: 50%; vertical-align: middle; margin-right: 10px;">
+                            ${comment.username}
+                        </td>
+                        <td>${comment.text}</td>
+                        <td>${formattedDate}</td>
+                        <td class="actions-cell">
+                            <button class="btn-delete btn-delete-comment" data-id="${comment.id}">Hapus</button>
+                        </td>
+                    `;
+                    commentsTableBody.appendChild(row);
+                });
+            }, error => console.error("Error fetching comments: ", error));
+        }
+
+        // --- Fungsi Render & Filter Artikel ---
+        function renderArticles(data) {
+            articlesTableBody.innerHTML = '';
+            if (data.length === 0) {
+                 articlesTableBody.innerHTML = `<tr><td colspan="4" style="text-align:center; color: var(--color-text-muted);">Belum ada artikel.</td></tr>`;
+                 return;
+            }
+            data.forEach(article => {
+                const row = document.createElement('tr');
+                row.dataset.id = article.id;
+                const formattedDate = article.createdAt?.seconds ? new Date(article.createdAt.seconds * 1000).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }) : 'N/A';
+                row.innerHTML = `<td>${article.title}</td><td>${article.author}</td><td>${formattedDate}</td><td class="actions-cell"><button class="btn-edit">Edit</button><button class="btn-delete">Hapus</button></td>`;
+                articlesTableBody.appendChild(row);
+            });
+        }
+        document.getElementById('article-search').addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            const filteredData = articlesData.filter(article => article.title.toLowerCase().includes(searchTerm));
+            renderArticles(filteredData);
+        });
+        
+        // --- Logika Modal & CRUD Artikel (Tidak diubah) ---
+        // (Semua kode untuk modal dan CRUD artikel tetap sama persis)
+        function openModal(mode, data = {}) {
+            articleForm.reset();
+            const articleIdInput = document.getElementById('article-id');
+            if (mode === 'edit') {
+                document.getElementById('modal-title').textContent = 'Edit Artikel';
+                articleIdInput.value = data.id;
+                document.getElementById('article-title').value = data.title;
+                document.getElementById('article-author').value = data.author;
+                document.getElementById('article-summary').value = data.summary;
+                document.getElementById('article-content').value = data.content || '';
+            } else {
+                document.getElementById('modal-title').textContent = 'Tambah Artikel Baru';
+                articleIdInput.value = '';
+            }
+            modal.style.display = 'flex';
+        }
+        function closeModal() { modal.style.display = 'none'; }
+        addArticleBtn.addEventListener('click', () => openModal('add'));
+        closeModalBtn.addEventListener('click', closeModal);
+        window.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+
+        articleForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const id = document.getElementById('article-id').value;
+            const articleData = {
+                title: document.getElementById('article-title').value,
+                summary: document.getElementById('article-summary').value,
+                content: document.getElementById('article-content').value,
+                author: document.getElementById('article-author').value,
+                updatedAt: serverTimestamp()
+            };
+            try {
+                if (id) {
+                    await updateDoc(doc(db, 'articles', id), articleData);
+                } else {
+                    articleData.createdAt = serverTimestamp();
+                    await addDoc(collection(db, 'articles'), articleData);
+                }
+                closeModal();
+            } catch (error) {
+                console.error("Error saving article: ", error);
+            }
+        });
+
+        articlesTableBody.addEventListener('click', async (e) => {
+            const row = e.target.closest('tr');
+            if (!row) return;
+            const id = row.dataset.id;
+            const docRef = doc(db, 'articles', id);
+            if (e.target.matches('.btn-edit')) {
+                const docSnap = await getDoc(docRef);
+                if (docSnap.exists()) {
+                    openModal('edit', { id: docSnap.id, ...docSnap.data() });
+                }
+            }
+            if (e.target.matches('.btn-delete')) {
+                if (confirm(`Yakin ingin menghapus artikel ini?`)) {
+                    await deleteDoc(docRef);
+                }
+            }
+        });
+
+        // BARU: Event Listener untuk Menghapus Komentar
+        commentsTableBody.addEventListener('click', async (e) => {
+            if (e.target.matches('.btn-delete-comment')) {
+                const id = e.target.dataset.id;
+                if (confirm('Yakin ingin menghapus komentar ini secara permanen?')) {
+                    try {
+                        await deleteDoc(doc(db, 'comments', id));
+                        // Komentar akan hilang otomatis berkat onSnapshot
+                    } catch (error) {
+                        console.error("Error deleting comment: ", error);
+                        alert('Gagal menghapus komentar.');
+                    }
+                }
+            }
+        });
+    });
+</script>
+</body>
+</html>
